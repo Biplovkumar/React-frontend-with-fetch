@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
+import config from "../utils/config";
 
 const SignUp = () => {
     const [name, setName] = useState("");
@@ -15,7 +16,7 @@ const SignUp = () => {
 
     const collectData = async () => {
         console.warn(name, email, password);
-        let result = await fetch("http://localhost:4000/register", {
+        let result = await fetch(`${config.URL}register`, {
             method: 'post',
             body: JSON.stringify({ name, email, password }),
             headers: {

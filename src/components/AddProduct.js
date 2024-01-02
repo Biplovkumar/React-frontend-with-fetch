@@ -1,11 +1,23 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'
+import config from '../utils/config'
+
 
 const AddProduct = () => {
+    const navigate = useNavigate();
+
     const [name, setName] = React.useState('');
     const [price, setPrice] = React.useState('');
     const [category, setCategory] = React.useState('');
     const [company, setCompnay] = React.useState('');
     const [error,setError] = React.useState(false);
+
+    let token = localStorage.getItem('token')
+        try {
+            token = token ? `bearer ${JSON.parse(token)}` : null;
+        } catch (error) {
+          console.error("Error parsing JSON token:", error);
+        }
 
     const addProduct = async () => {
 
@@ -16,16 +28,17 @@ const AddProduct = () => {
         }
 
         const userId = JSON.parse(localStorage.getItem('user'))._id;
-        let result = await fetch("http://localhost:4000/add-product", {
+        let result = await fetch(`${config.URL}add-product`, {
             method: "post",
             body: JSON.stringify({ name, price, category, company, userId }),
             headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
+                 headers:{ authorization:token }
             }
         });
         result = await result.json();
         console.warn(result)
-        alert("Added product details")
+        navigate("/")
     }
 
     return (

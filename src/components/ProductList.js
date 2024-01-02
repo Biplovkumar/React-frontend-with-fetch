@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import config from '../utils/config';
+
 const ProductList = () => {
     const [products, setProducts] = useState([]);
 
@@ -7,18 +9,17 @@ const ProductList = () => {
         getProducts();
     }, []);
 
-    const getProducts = async () => {
-        let token = localStorage.getItem('token')
+
+       let token = localStorage.getItem('token')
         try {
-            token = token ? token : null;
+            token = token ? `bearer ${JSON.parse(token)}` : null;
         } catch (error) {
           console.error("Error parsing JSON token:", error);
         }
 
-        let result = await fetch('http://localhost:4000/products',{
-            headers:{
-                authorization:token
-            }
+    const getProducts = async () => {
+        let result = await fetch(`${config.URL}products`,{
+            headers:{ authorization:token }
         });
         result = await result.json();
         setProducts(result);
@@ -26,8 +27,9 @@ const ProductList = () => {
 
     const deleteProduct = async (id) => {
         console.warn(id)
-        let result = await fetch(`http://localhost:4000/product/${id}`, {
-            method: "Delete"
+        let result = await fetch(`${config.URL}product/${id}`, {
+            method: "Delete",
+            headers:{ authorization:token } 
         });
         result = await result.json();
         if (result) {
@@ -38,7 +40,9 @@ const ProductList = () => {
     const searchHandle = async (event)=>{
         let key = event.target.value;
         if(key){
-            let result = await fetch(`http://localhost:4000/search/${key}`);
+            let result = await fetch(`${config.URL}search/${key}`,{
+                 headers:{ authorization:token }
+            });
             result = await result.json()
             if(result){
                 setProducts(result)

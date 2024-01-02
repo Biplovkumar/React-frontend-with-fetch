@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'
+import config from '../utils/config';
 
 const UpdateProduct = () => {
     const [name, setName] = React.useState('');
@@ -9,13 +10,24 @@ const UpdateProduct = () => {
     const params = useParams();
     const navigate = useNavigate();
 
+     let token = localStorage.getItem('token')
+        try {
+            token = token ? `bearer ${JSON.parse(token)}` : null;
+        } catch (error) {
+          console.error("Error parsing JSON token:", error);
+        }
+
     useEffect(() => {
         getProductDetails();
     }, [])
 
+
+
     const getProductDetails = async () => {
         console.warn(params)
-        let result = await fetch(`http://localhost:4000/product/${params.id}`);
+        let result = await fetch(`${config.URL}product/${params.id}`,{
+             headers:{ authorization:token }
+        });
         result = await result.json();
         setName(result.name);
         setPrice(result.price);
@@ -25,11 +37,12 @@ const UpdateProduct = () => {
 
     const updateProduct = async () => {
         console.warn(name, price, category, company)
-        let result = await fetch(`http://localhost:4000/product/${params.id}`, {
+        let result = await fetch(`${config.URL}product/${params.id}`, {
             method: 'Put',
             body: JSON.stringify({ name, price, category, company }),
             headers: {
-                'Content-Type': 'Application/json'
+                 'Content-Type': 'Application/json',
+                 authorization:token,
             }
         });
         result = await result.json();

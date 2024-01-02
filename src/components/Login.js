@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import config from '../utils/config';
 const Login = () => {
 
     const [email, setEmail] = React.useState('');
@@ -15,7 +16,7 @@ const Login = () => {
     }, [])
 
     const handleLogin = async () => {
-        let result = await fetch("http://localhost:4000/login", {
+        let result = await fetch(`${config.URL}login`, {
             method: 'post',
             body: JSON.stringify({ email, password }),
             headers: {
