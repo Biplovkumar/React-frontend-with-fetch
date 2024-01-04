@@ -29,16 +29,19 @@ const AddProduct = () => {
 
         const userId = JSON.parse(localStorage.getItem('user'))._id;
         let result = await fetch(`${config.URL}add-product`, {
-            method: "post",
-            body: JSON.stringify({ name, price, category, company, userId }),
+            method: 'Post',
+            body: JSON.stringify({ name, price, category, company,userId }),
             headers: {
-                "Content-type": "application/json",
-                 headers:{ authorization:token }
+                 'Content-Type': 'Application/json',
+                 authorization:token,
             }
         });
-        result = await result.json();
-        console.warn(result)
-        navigate("/")
+       let res = await result.json();
+       if (result?.status && result.status < 300) {
+        navigate('/')
+       }else{
+         alert(res?.result.toString())
+       }
     }
 
     return (

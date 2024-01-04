@@ -21,8 +21,12 @@ const ProductList = () => {
         let result = await fetch(`${config.URL}products`,{
             headers:{ authorization:token }
         });
-        result = await result.json();
-        setProducts(result);
+        let res = await result.json();
+       if (result?.status && result.status < 300) {
+         setProducts(res);
+       }else{
+         alert(res?.result.toString())
+       }      
     }
 
     const deleteProduct = async (id) => {
@@ -31,10 +35,12 @@ const ProductList = () => {
             method: "Delete",
             headers:{ authorization:token } 
         });
-        result = await result.json();
-        if (result) {
-            getProducts();
-        }
+       let res = await result.json();
+       if (result?.status && result.status < 300) {
+        getProducts();
+       }else{
+         alert(res?.result.toString())
+       } 
     }
 
     const searchHandle = async (event)=>{
@@ -43,10 +49,12 @@ const ProductList = () => {
             let result = await fetch(`${config.URL}search/${key}`,{
                  headers:{ authorization:token }
             });
-            result = await result.json()
-            if(result){
-                setProducts(result)
-            }
+          let res = await result.json();
+          if (result?.status && result.status < 300) {
+          setProducts(res)
+       }else{
+         alert(res?.result.toString())
+       }
         }else{
             getProducts();
         }
@@ -76,7 +84,7 @@ const ProductList = () => {
                         <li>{item.category}</li>
                         <li>
                             <button onClick={() => deleteProduct(item._id)}>Delete</button>
-                            <Link to={"/update/"+item._id} >Update </Link>
+                            <Link style={{marginLeft: "5px",}} to={"/update/"+item._id} >Update </Link>
                         </li>
 
                     </ul>

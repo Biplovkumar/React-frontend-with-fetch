@@ -23,15 +23,18 @@ const Login = () => {
                 'Content-Type': 'application/json'
             }
         });
-        result = await result.json();
-        console.warn(result)
-        if (result.auth) {
-            localStorage.setItem('user', JSON.stringify(result.user));
-            localStorage.setItem('token', JSON.stringify(result.auth));
+        // if (result.auth) {
+        let res = await result?.json();
+       if (result?.status && result.status < 300) {
+            localStorage.setItem('user', JSON.stringify(res.user));
+            localStorage.setItem('token', JSON.stringify(res.auth));
             navigate("/")
-        } else {
-            alert("Please enter connect details")
-        }
+       }else{
+         alert(res?.result.toString())
+       }
+        // } else {
+        //     alert("Please enter correct details")
+        // }
     }
 
     return (

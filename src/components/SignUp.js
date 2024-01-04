@@ -23,15 +23,14 @@ const SignUp = () => {
                 'Content-Type': 'application/json'
             }
         });
-        result = await result.json();
-        console.warn(result);
-        localStorage.setItem("user", JSON.stringify(result))
-        localStorage.setItem("token", JSON.stringify(result.auth))
-
-        // localStorage.setItem("user", JSON.stringify(result.result))
-        // localStorage.setItem("token", JSON.stringify(result.auth))
-
+       let res = await result.json();
+       if (result?.status && result.status < 300) {
+        localStorage.setItem("user", JSON.stringify(res.result))
+        localStorage.setItem("token", JSON.stringify(res.auth))
         navigate('/')
+       }else{
+         alert(res?.result.toString())
+       }
     }
 
     return (

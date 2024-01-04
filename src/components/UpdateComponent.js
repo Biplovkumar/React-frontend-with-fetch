@@ -28,27 +28,34 @@ const UpdateProduct = () => {
         let result = await fetch(`${config.URL}product/${params.id}`,{
              headers:{ authorization:token }
         });
-        result = await result.json();
-        setName(result.name);
-        setPrice(result.price);
-        setCategory(result.category);
-        setCompnay(result.company)
+       let res = await result.json();
+       if (result?.status && result.status < 300) {
+        setName(res.name);
+        setPrice(res.price);
+        setCategory(res.category);
+        setCompnay(res.company)
+       }else{
+         alert(res?.result.toString())
+       }
     }
 
     const updateProduct = async () => {
         console.warn(name, price, category, company)
+         const userId = JSON.parse(localStorage.getItem('user'))._id;
         let result = await fetch(`${config.URL}product/${params.id}`, {
             method: 'Put',
-            body: JSON.stringify({ name, price, category, company }),
+            body: JSON.stringify({ name, price, category, company, userId}),
             headers: {
                  'Content-Type': 'Application/json',
                  authorization:token,
             }
         });
-        result = await result.json();
-        if (result) {
-            navigate('/')
-        }
+       let res = await result.json();
+       if (result?.status && result.status < 300) {
+        navigate('/')
+       }else{
+         alert(res?.result.toString())
+       }
 
     }
 
