@@ -8,6 +8,7 @@ import Login from './components/Login'
 import AddProduct from './components/AddProduct';
 import ProductList from './components/ProductList';
 import UpdateProduct from './components/UpdateComponent';
+import UpdateProfile from './components/UpdateProfile';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
        <Route path="/add" element={<AddProduct />} />
        <Route path="/update/:id" element={<UpdateProduct />} />
        <Route path="/logout" element={<h1> Logout Component</h1>} />
-       <Route path="/profile" element={<h1>Profile Component</h1>} />
+       <Route path="/profile" element={<UpdateProfile />} />
        </Route>
 
        <Route path="/signup" element={<SignUp />} />

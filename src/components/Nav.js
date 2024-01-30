@@ -1,7 +1,6 @@
 import React from 'react';
-import {
-    Link, useNavigate
-} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import config from './../utils/config';
 
 const Nav = () => {
 
@@ -15,18 +14,23 @@ const Nav = () => {
 
 let name;
 try {
-    name = auth ? JSON.parse(auth).name : null;
+    name = auth ? JSON.parse(auth)?.firstName : null;
 } catch (error) {
   console.error("Error parsing JSON:", error);
 }
 
-
+let image
+try {
+    image = auth ? JSON.parse(auth)?.profileImage : null;
+} catch (error) {
+  console.error("Image Error parsing JSON:", error);
+}
     return (
         <div>
             <img
             alt='logo'
             className='logo'
-             src='https://biplovkumar.github.io/img/profile.jpg' />
+             src={image ? config.image+image : config.dummy} />
             {
                 auth ?
                     <ul className="nav-ul">

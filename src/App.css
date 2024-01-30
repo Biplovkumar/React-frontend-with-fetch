@@ -51,6 +51,7 @@
 .register, .product{
   margin-left: 30%;
 }
+
 .login{
   margin-left: 30%;
   margin-top: 100px;
@@ -61,17 +62,29 @@
   display: block;
   border: 1px solid skyblue;
   width: 300px;
-  margin: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 0px;
+}
+
+.datePicker {
+  border: 0px solid white;
 }
 
 .appButton {
-  margin: 20px;
+  margin-top: 20px;
   width: 150px;
+  display: block;
   padding: 10px;
   background-color: skyblue;
   border: solid 1px;
   cursor: pointer;
 }
+
+.checkBox{
+   margin-right: 10px; 
+}
+
 .nav-right{
   text-align: right;
 }
@@ -113,6 +126,12 @@
   height: 38px;
   padding-left: 30px;
   border: solid 1px skyblue;
+}
+
+.imgNew { 
+  margin-right: 10;
+  width: 20px;
+  height:15px;
 }
 
 @keyframes App-logo-spin {
