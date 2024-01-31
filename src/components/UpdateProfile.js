@@ -34,7 +34,6 @@ const UpdateProfile = () => {
              headers:{ authorization:token }
         });
        let res = await result.json();
-       console.log('res:', res);
        if (result?.status && result.status < 300) {
         setFirstName(res?.firstName);
         setLastName(res?.lastName);
@@ -84,7 +83,7 @@ const UpdateProfile = () => {
        }
     }
 
-    
+
    const handleImageChange = (e) => {
      const file = e.target.files[0];
      setImage(file);
