@@ -30,6 +30,7 @@ try {
             <img
             alt='logo'
             className='logo'
+             onError={()=>{image = null}}
              src={image ? config.image+image : config.dummy} />
             {
                 auth ?

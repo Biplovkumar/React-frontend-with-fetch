@@ -84,9 +84,7 @@ const UpdateProfile = () => {
        }
     }
 
-
-
-
+    
    const handleImageChange = (e) => {
      const file = e.target.files[0];
      setImage(file);
@@ -101,11 +99,11 @@ const UpdateProfile = () => {
             <div className="inputBox">
             <input type="file" id="imageInput" onChange={handleImageChange}/>
 
-             {selectedImage || image ? (<img src={image ? URL.createObjectURL(image) : selectedImage ? `${config.image}${selectedImage}` : null} 
-             alt="Selected" className="imgNew" />): null}
+             {selectedImage || image ? (
+             <img src={image ? URL.createObjectURL(image) : selectedImage ? `${config.image}${selectedImage}` : null} 
+                  onError={()=>setSelectedImage(null)} alt="Selected" className="imgNew" />): null}
 
             </div>
-
 
             <input className="inputBox" type="text" placeholder="Enter First Name"
                 value={firstName} onChange={(e) => setFirstName(e.target.value)}
