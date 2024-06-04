@@ -34,7 +34,7 @@ const SignUp = () => {
             }
         });
        let res = await result.json();
-       if (result?.status && result.status < 300) {
+       if (result?.status && result.status < 202) {
         localStorage.setItem("user", JSON.stringify(res.result))
         localStorage.setItem("token", JSON.stringify(res.auth))
         navigate('/')

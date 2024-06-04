@@ -34,7 +34,7 @@ const UpdateProfile = () => {
              headers:{ authorization:token }
         });
        let res = await result.json();
-       if (result?.status && result.status < 300) {
+       if (result?.status && result.status < 202) {
         setFirstName(res?.firstName);
         setLastName(res?.lastName);
         setEmail(res?.email);
@@ -70,7 +70,7 @@ const UpdateProfile = () => {
             }
         });
        let res = await result.json();
-       if (result?.status && result.status < 300) {
+       if (result?.status && result.status < 202) {
         localStorage.setItem("user", JSON.stringify(res.result))
         localStorage.setItem("token", JSON.stringify(res.auth))
         navigate('/')
@@ -99,7 +99,9 @@ const UpdateProfile = () => {
             <input type="file" id="imageInput" onChange={handleImageChange}/>
 
              {selectedImage || image ? (
-             <img src={image ? URL.createObjectURL(image) : selectedImage ? `${config.image}${selectedImage}` : null} 
+             <img 
+            //  src={image ? URL.createObjectURL(image) : selectedImage ? `${config.image}${selectedImage}` : null} 
+             src={image ? URL.createObjectURL(image) : selectedImage ? `${selectedImage}` : null} 
                   onError={()=>setSelectedImage(null)} alt="Selected" className="imgNew" />): null}
 
             </div>

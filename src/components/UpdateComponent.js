@@ -29,7 +29,7 @@ const UpdateProduct = () => {
              headers:{ authorization:token }
         });
        let res = await result.json();
-       if (result?.status && result.status < 300) {
+       if (result?.status && result.status < 202) {
         setName(res.name);
         setPrice(res.price);
         setCategory(res.category);
@@ -51,7 +51,7 @@ const UpdateProduct = () => {
             }
         });
        let res = await result.json();
-       if (result?.status && result.status < 300) {
+       if (result?.status && result.status < 202) {
         navigate('/')
        }else{
          alert(res?.result.toString())

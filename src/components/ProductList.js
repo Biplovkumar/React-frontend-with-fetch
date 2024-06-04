@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import config from '../utils/config';
 
 const ProductList = () => {
+    const navigate = useNavigate();
+
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -17,16 +19,36 @@ const ProductList = () => {
           console.error("Error parsing JSON token:", error);
         }
 
+    const logout = () => {
+        localStorage.clear();
+        alert('Unauthorized')
+        navigate('/login')
+    }
+    
+
+    
     const getProducts = async () => {
+        try {
         let result = await fetch(`${config.URL}products`,{
-            headers:{ authorization:token }
-        });
-        let res = await result.json();
-       if (result?.status && result.status < 300) {
-         setProducts(res);
-       }else{
-         alert(res?.result.toString())
-       }      
+            headers:{ authorization:token }});
+            
+       if (!result.ok) {
+        // Handle server errors
+        if (result.status === 404) {
+          throw new Error('Resource not found');
+        } else if (result.status === 401) { logout()
+        } else if (result.status === 500) {
+          throw new Error('Internal Server Error');
+        } else {
+          throw new Error('Failed to fetch data');
+        }
+      }
+
+       let res = await result.json();
+       setProducts(res);     
+        } catch (error) {
+            alert(error);   
+        }   
     }
 
     const deleteProduct = async (id) => {
@@ -36,7 +58,7 @@ const ProductList = () => {
             headers:{ authorization:token } 
         });
        let res = await result.json();
-       if (result?.status && result.status < 300) {
+       if (result?.status && result.status < 202) {
         getProducts();
        }else{
          alert(res?.result.toString())
@@ -50,7 +72,7 @@ const ProductList = () => {
                  headers:{ authorization:token }
             });
           let res = await result.json();
-          if (result?.status && result.status < 300) {
+          if (result?.status && result.status < 202) {
           setProducts(res)
        }else{
          alert(res?.result.toString())

@@ -8,7 +8,7 @@ const Nav = () => {
     const navigate = useNavigate();
     const logout = () => {
         localStorage.clear();
-        navigate('/signup')
+        navigate('/login')
     }
 
 
@@ -31,7 +31,8 @@ try {
             alt='logo'
             className='logo'
              onError={()=>{image = null}}
-             src={image ? config.image+image : config.dummy} />
+             src={image ? image : config.dummy} />
+             {/* src={image ? config.image+image : config.dummy} /> */}
             {
                 auth ?
                     <ul className="nav-ul">
@@ -39,12 +40,12 @@ try {
                         <li><Link to="/add">Add Products</Link></li>
                         {/* <li><Link to="/update"> Update Products</Link></li> */}
                         <li><Link to="/profile">Profile</Link></li>
-                        <li><Link onClick={logout} to="/signup">Logout ({name})</Link></li>
+                        <li><Link onClick={logout} to="/login">Logout ({name})</Link></li>
                     </ul>
                     :
                     <ul className="nav-ul nav-right">
-                        <li> <Link to="/signup">Sign Up</Link></li>
                         <li><Link to="/login">Login</Link></li>
+                        <li> <Link to="/signup">Sign Up</Link></li>
                     </ul>
             }
 

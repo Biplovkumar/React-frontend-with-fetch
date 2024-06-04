@@ -25,7 +25,7 @@ const Login = () => {
         });
         // if (result.auth) {
         let res = await result?.json();
-       if (result?.status && result.status < 300) {
+       if (result?.status && result.status < 202) {
             localStorage.setItem('user', JSON.stringify(res.user));
             localStorage.setItem('token', JSON.stringify(res.auth));
             navigate("/")
