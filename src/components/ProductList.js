@@ -89,6 +89,7 @@ const ProductList = () => {
             <input type="" className='search-product-box' placeholder='Search Product'
             onChange={searchHandle}
              />
+             <div className='mainDiv'>
             <ul>
                 <li>S. No.</li>
                 <li>Name</li>
@@ -113,6 +114,7 @@ const ProductList = () => {
                 )
                 :<h1>No Result Found</h1>
             }
+            </div>
         </div>
     )
 }

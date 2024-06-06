@@ -103,7 +103,10 @@
   margin-top: -20px;
   margin-left: 20px;
 }
-
+.mainDiv {
+  height: 450px;
+  overflow-y: scroll;
+}
 .product-list {
   text-align: center;
   margin-top: 50px;
