@@ -10,19 +10,18 @@ const AddProduct = () => {
     const [price, setPrice] = React.useState('');
     const [category, setCategory] = React.useState('');
     const [company, setCompnay] = React.useState('');
-    const [error,setError] = React.useState(false);
+    const [error, setError] = React.useState(false);
 
     let token = localStorage.getItem('token')
-        try {
-            token = token ? `bearer ${JSON.parse(token)}` : null;
-        } catch (error) {
-          console.error("Error parsing JSON token:", error);
-        }
+    try {
+        token = token ? `bearer ${JSON.parse(token)}` : null;
+    } catch (error) {
+        console.error("Error parsing JSON token:", error);
+    }
 
     const addProduct = async () => {
 
-        if(!name || !price || !company || !category)
-        {
+        if (!name || !price || !company || !category) {
             setError(true);
             return false
         }
@@ -30,18 +29,18 @@ const AddProduct = () => {
         const userId = JSON.parse(localStorage.getItem('user'))._id;
         let result = await fetch(`${config.URL}add-product`, {
             method: 'Post',
-            body: JSON.stringify({ name, price, category, company,userId }),
+            body: JSON.stringify({ name, price, category, company, userId }),
             headers: {
-                 'Content-Type': 'Application/json',
-                 authorization:token,
+                'Content-Type': 'Application/json',
+                authorization: token,
             }
         });
-       let res = await result.json();
-       if (result?.status && result.status < 202) {
-        navigate('/')
-       }else{
-         alert(res?.result.toString())
-       }
+        let res = await result.json();
+        if (result?.status && result.status < 202) {
+            navigate('/')
+        } else {
+            alert(res?.result.toString())
+        }
     }
 
     return (
@@ -60,7 +59,7 @@ const AddProduct = () => {
             <input type="text" placeholder='Enter product category' className='inputBox'
                 value={category} onChange={(e) => { setCategory(e.target.value) }}
             />
-            {error && !category && <span className='invalid-input'>Enter valid category</span>} 
+            {error && !category && <span className='invalid-input'>Enter valid category</span>}
 
             <input type="text" placeholder='Enter product company' className='inputBox'
                 value={company} onChange={(e) => { setCompnay(e.target.value) }}

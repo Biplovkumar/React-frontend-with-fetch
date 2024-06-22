@@ -2,118 +2,145 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import config from '../utils/config';
 
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+
+
+// import DeleteIcon from '@mui/icons-material/Delete';
+// <DeleteIcon /> 
+
+
+// <FontAwesomeIcon icon={faWhatsapp} />
+// <FontAwesomeIcon icon="fa-brands fa-whatsapp" />
+
+
+// <i class="fa fa-car"></i>
+// <i class="fa fa-car" style={{ fontSize: 50, color: 'red' }}></i>
+
+
+// "@emotion/react": "^11.11.4",
+//     "@emotion/styled": "^11.11.5",
+//         "@fortawesome/fontawesome-svg-core": "^6.5.2",
+//             "@fortawesome/free-brands-svg-icons": "^6.5.2",
+//                 "@fortawesome/free-regular-svg-icons": "^6.5.2",
+//                     "@fortawesome/free-solid-svg-icons": "^6.5.2",
+//                         "@fortawesome/react-fontawesome": "^0.2.2",
+//                             "@mui/icons-material": "^5.15.20",
+//                                 "@mui/material": "^5.15.20",
+
+
 const ProductList = () => {
     const navigate = useNavigate();
-
     const [products, setProducts] = useState([]);
 
+
+
     useEffect(() => {
-        getProducts();
+        //getProducts();
     }, []);
 
-
-       let token = localStorage.getItem('token')
-        try {
-            token = token ? `bearer ${JSON.parse(token)}` : null;
-        } catch (error) {
-          console.error("Error parsing JSON token:", error);
-        }
+    let token = localStorage.getItem('token')
+    try {
+        token = token ? `bearer ${JSON.parse(token)}` : null;
+    } catch (error) {
+        console.error("Error parsing JSON token:", error);
+    }
 
     const logout = () => {
         localStorage.clear();
         alert('Unauthorized')
         navigate('/login')
     }
-    
 
-    
     const getProducts = async () => {
         try {
-        let result = await fetch(`${config.URL}products`,{
-            headers:{ authorization:token }});
-            
-       if (!result.ok) {
-        // Handle server errors
-        if (result.status === 404) {
-          throw new Error('Resource not found');
-        } else if (result.status === 401) { logout()
-        } else if (result.status === 500) {
-          throw new Error('Internal Server Error');
-        } else {
-          throw new Error('Failed to fetch data');
-        }
-      }
+            let result = await fetch(`${config.URL}products`, {
+                headers: { authorization: token }
+            });
 
-       let res = await result.json();
-       setProducts(res);     
+            if (!result.ok) {
+                // Handle server errors
+                if (result.status === 404) {
+                    throw new Error('Resource not found');
+                } else if (result.status === 401) {
+                    logout()
+                } else if (result.status === 500) {
+                    throw new Error('Internal Server Error');
+                } else {
+                    throw new Error('Failed to fetch data');
+                }
+            }
+
+            let res = await result.json();
+            setProducts(res);
         } catch (error) {
-            alert(error);   
-        }   
+            alert(error);
+        }
     }
 
     const deleteProduct = async (id) => {
         console.warn(id)
         let result = await fetch(`${config.URL}product/${id}`, {
             method: "Delete",
-            headers:{ authorization:token } 
+            headers: { authorization: token }
         });
-       let res = await result.json();
-       if (result?.status && result.status < 202) {
-        getProducts();
-       }else{
-         alert(res?.result.toString())
-       } 
+        let res = await result.json();
+        if (result?.status && result.status < 202) {
+            getProducts();
+        } else {
+            alert(res?.result.toString())
+        }
     }
 
-    const searchHandle = async (event)=>{
+    const searchHandle = async (event) => {
         let key = event.target.value;
-        if(key){
-            let result = await fetch(`${config.URL}search/${key}`,{
-                 headers:{ authorization:token }
+        if (key) {
+            let result = await fetch(`${config.URL}search/${key}`, {
+                headers: { authorization: token }
             });
-          let res = await result.json();
-          if (result?.status && result.status < 202) {
-          setProducts(res)
-       }else{
-         alert(res?.result.toString())
-       }
-        }else{
+            let res = await result.json();
+            if (result?.status && result.status < 202) {
+                setProducts(res)
+            } else {
+                alert(res?.result.toString())
+            }
+        } else {
             getProducts();
         }
-        
+
     }
 
     return (
         <div className="product-list">
             <h3>Product List</h3>
             <input type="" className='search-product-box' placeholder='Search Product'
-            onChange={searchHandle}
-             />
-             <div className='mainDiv'>
-            <ul>
-                <li>S. No.</li>
-                <li>Name</li>
-                <li>Price</li>
-                <li>Category</li>
-                <li>Operation</li>
+                onChange={searchHandle}
+            />
+            <div className='mainDiv'>
+                <ul>
+                    <li>S. No.</li>
+                    <li>Name</li>
+                    <li>Price</li>
+                    <li>Category</li>
+                    <li>Operation</li>
 
-            </ul>
-            {
-                products.length>0 ? products.map((item, index) =>
-                    <ul key={item._id}>
-                        <li>{index + 1}</li>
-                        <li>{item.name}</li>
-                        <li>{item.price}</li>
-                        <li>{item.category}</li>
-                        <li>
-                            <button onClick={() => deleteProduct(item._id)}>Delete</button>
-                            <Link style={{marginLeft: "5px",}} to={"/update/"+item._id} >Update </Link>
-                        </li>
+                </ul>
+                {
+                    products.length > 0 ? products.map((item, index) =>
+                        <ul key={item._id}>
+                            <li>{index + 1}</li>
+                            <li>{item.name}</li>
+                            <li>{item.price}</li>
+                            <li>{item.category}</li>
+                            <li>
+                                <button onClick={() => deleteProduct(item._id)}>Delete</button>
+                                <Link style={{ marginLeft: "5px", }} to={"/update/" + item._id} >Update </Link>
+                            </li>
 
-                    </ul>
-                )
-                :<h1>No Result Found</h1>
-            }
+                        </ul>
+                    )
+                        : <h1>No Result Found</h1>
+                }
             </div>
         </div>
     )

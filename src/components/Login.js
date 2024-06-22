@@ -11,8 +11,8 @@ const Login = () => {
         const callInitial = () => {
             const auth = localStorage.getItem('user');
             if (auth) navigate("/")
-          }
-          callInitial();
+        }
+        callInitial();
     }, [])
 
     const handleLogin = async () => {
@@ -25,13 +25,13 @@ const Login = () => {
         });
         // if (result.auth) {
         let res = await result?.json();
-       if (result?.status && result.status < 202) {
-            localStorage.setItem('user', JSON.stringify(res.user));
+        if (result?.status && result.status < 202) {
+            localStorage.setItem('user', JSON.stringify(res.result));
             localStorage.setItem('token', JSON.stringify(res.auth));
             navigate("/")
-       }else{
-         alert(res?.result.toString())
-       }
+        } else {
+            alert(res?.result.toString())
+        }
         // } else {
         //     alert("Please enter correct details")
         // }

@@ -10,12 +10,12 @@ const UpdateProduct = () => {
     const params = useParams();
     const navigate = useNavigate();
 
-     let token = localStorage.getItem('token')
-        try {
-            token = token ? `bearer ${JSON.parse(token)}` : null;
-        } catch (error) {
-          console.error("Error parsing JSON token:", error);
-        }
+    let token = localStorage.getItem('token')
+    try {
+        token = token ? `bearer ${JSON.parse(token)}` : null;
+    } catch (error) {
+        console.error("Error parsing JSON token:", error);
+    }
 
     useEffect(() => {
         getProductDetails();
@@ -25,37 +25,37 @@ const UpdateProduct = () => {
 
     const getProductDetails = async () => {
         console.warn(params)
-        let result = await fetch(`${config.URL}product/${params.id}`,{
-             headers:{ authorization:token }
+        let result = await fetch(`${config.URL}product/${params.id}`, {
+            headers: { authorization: token }
         });
-       let res = await result.json();
-       if (result?.status && result.status < 202) {
-        setName(res.name);
-        setPrice(res.price);
-        setCategory(res.category);
-        setCompnay(res.company)
-       }else{
-         alert(res?.result.toString())
-       }
+        let res = await result.json();
+        if (result?.status && result.status < 202) {
+            setName(res.name);
+            setPrice(res.price);
+            setCategory(res.category);
+            setCompnay(res.company)
+        } else {
+            alert(res?.result.toString())
+        }
     }
 
     const updateProduct = async () => {
         console.warn(name, price, category, company)
-         const userId = JSON.parse(localStorage.getItem('user'))._id;
+        const userId = JSON.parse(localStorage.getItem('user'))._id;
         let result = await fetch(`${config.URL}product/${params.id}`, {
             method: 'Put',
-            body: JSON.stringify({ name, price, category, company, userId}),
+            body: JSON.stringify({ name, price, category, company, userId }),
             headers: {
-                 'Content-Type': 'Application/json',
-                 authorization:token,
+                'Content-Type': 'Application/json',
+                authorization: token,
             }
         });
-       let res = await result.json();
-       if (result?.status && result.status < 202) {
-        navigate('/')
-       }else{
-         alert(res?.result.toString())
-       }
+        let res = await result.json();
+        if (result?.status && result.status < 202) {
+            navigate('/')
+        } else {
+            alert(res?.result.toString())
+        }
 
     }
 

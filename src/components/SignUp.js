@@ -15,7 +15,7 @@ const SignUp = () => {
     const [consent, setConsent] = useState("");
 
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         const auth = localStorage.getItem('user');
         if (auth) {
@@ -26,24 +26,25 @@ const SignUp = () => {
     const collectData = async () => {
         console.warn(firstName, lastName, email, mobile, password, gender, address, zipcode, consent);
         if (firstName && lastName && email && mobile && password && gender && address && zipcode && consent) {
-        let result = await fetch(`${config.URL}register`, {
-            method: 'post',
-            body: JSON.stringify({ firstName, lastName, email, mobile, password, gender, dateOfBirth, address, zipcode}),
-            headers: {
-                'Content-Type': 'application/json'
+            let result = await fetch(`${config.URL}register`, {
+                method: 'post',
+                body: JSON.stringify({ firstName, lastName, email, mobile, password, gender, dateOfBirth, address, zipcode }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            let res = await result.json();
+            if (result?.status && result.status < 202) {
+                localStorage.setItem("user", JSON.stringify(res.result))
+                localStorage.setItem("token", JSON.stringify(res.auth))
+                navigate('/')
+            } else {
+                alert(res?.result.toString())
             }
-        });
-       let res = await result.json();
-       if (result?.status && result.status < 202) {
-        localStorage.setItem("user", JSON.stringify(res.result))
-        localStorage.setItem("token", JSON.stringify(res.auth))
-        navigate('/')
-       }else{
-         alert(res?.result.toString())
-       }}
-       else{
-         alert("All fields are required")
-       }
+        }
+        else {
+            alert("All fields are required")
+        }
     }
 
     return (
@@ -60,18 +61,18 @@ const SignUp = () => {
             />
 
             <div className="inputBox">
-            <label>Gender: </label>  
-            <label>
-                <input type="radio" name="gender" value="male" onChange={(e) => setGender(e.target.value)}/> Male
-            </label>
-            <label>
-                <input type="radio" name="gender" value="female" onChange={(e) => setGender(e.target.value)}/> Female
-            </label>
+                <label>Gender: </label>
+                <label>
+                    <input type="radio" name="gender" value="male" onChange={(e) => setGender(e.target.value)} /> Male
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="female" onChange={(e) => setGender(e.target.value)} /> Female
+                </label>
             </div>
 
             <div className="inputBox">
-            <label for="dateOfBirth">Date of Birth:  </label>
-            <input className="datePicker" type="date" id="dateOfBirth" name="dateOfBirth" value={dateOfBirth} onChange={(e) => setDob(e.target.value)} />
+                <label for="dateOfBirth">Date of Birth:  </label>
+                <input className="datePicker" type="date" id="dateOfBirth" name="dateOfBirth" value={dateOfBirth} onChange={(e) => setDob(e.target.value)} />
             </div>
 
             <input className="inputBox" type="number" placeholder="Enter Mobile"
@@ -87,7 +88,7 @@ const SignUp = () => {
                 value={zipcode} onChange={(e) => setZipCode(e.target.value)} maxlength={6}
             />
 
-            <input className="checkBox" type="checkbox" id="consent" name="consent" onClick={(e) => setConsent(e.target.checked)}/>
+            <input className="checkBox" type="checkbox" id="consent" name="consent" onClick={(e) => setConsent(e.target.checked)} />
             <label for="consent" class="consent-text">I agree to the terms and conditions</label>
 
             <button onClick={collectData} className="appButton" type="button">Sign Up</button>
