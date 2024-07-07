@@ -36,7 +36,7 @@ const ProductList = () => {
 
 
     useEffect(() => {
-        //getProducts();
+        getProducts();
     }, []);
 
     let token = localStorage.getItem('token')
@@ -57,7 +57,6 @@ const ProductList = () => {
             let result = await fetch(`${config.URL}products`, {
                 headers: { authorization: token }
             });
-
             if (!result.ok) {
                 // Handle server errors
                 if (result.status === 404) {
