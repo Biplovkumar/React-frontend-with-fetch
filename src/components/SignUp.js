@@ -88,9 +88,10 @@ const SignUp = () => {
                 value={zipcode} onChange={(e) => setZipCode(e.target.value)} maxlength={6}
             />
 
-            <input className="checkBox" type="checkbox" id="consent" name="consent" onClick={(e) => setConsent(e.target.checked)} />
-            <label for="consent" class="consent-text">I agree to the terms and conditions</label>
-
+            <div className="mb20">
+                <input className="checkBox" type="checkbox" id="consent" name="consent" onClick={(e) => setConsent(e.target.checked)} />
+                <label for="consent" class="consent-text">I agree to the terms and conditions</label>
+            </div>
             <button onClick={collectData} className="appButton" type="button">Sign Up</button>
         </div>
     )

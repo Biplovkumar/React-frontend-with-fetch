@@ -51,6 +51,7 @@ const Nav = () => {
                     <ul className="nav-ul nav-right">
                         <li><Link className={checkPath('/login') ? 'nav-link' : ''} to="/login">Login</Link></li>
                         <li><Link className={checkPath('/signup') ? 'nav-link' : ''} to="/signup">Sign Up</Link></li>
+                        <li><Link className={checkPath('/contactus') ? 'nav-link' : ''} to="/contactus">Contact Us</Link></li>
                     </ul>
             }
 

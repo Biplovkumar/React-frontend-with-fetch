@@ -9,6 +9,7 @@ import AddProduct from './components/AddProduct';
 import ProductList from './components/ProductList';
 import UpdateProduct from './components/UpdateComponent';
 import UpdateProfile from './components/UpdateProfile';
+import ContactUs from './components/ContactUs';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
 
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/contactus" element={<ContactUs />} />
 
         </Routes>
 

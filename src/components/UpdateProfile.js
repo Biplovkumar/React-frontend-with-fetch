@@ -101,7 +101,6 @@ const UpdateProfile = () => {
 
                 {selectedImage || image ? (
                     <img
-                        //  src={image ? URL.createObjectURL(image) : selectedImage ? `${config.image}${selectedImage}` : null} 
                         src={image ? URL.createObjectURL(image) : selectedImage ? `${selectedImage}` : null}
                         onError={() => setSelectedImage(null)} alt="Selected" className="imgNew" />) : null}
 

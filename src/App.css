@@ -57,9 +57,33 @@
   margin-left: 30%;
 }
 
+.productContainer {
+  margin-left: 30%;
+  height: 600px;
+  background-color: 'red';
+  overflow-y: scroll;
+  padding-bottom: 20px;
+}
+
 .login{
   margin-left: 30%;
   margin-top: 100px;
+}
+
+.mt10{
+   margin-top: 10px;
+}
+
+.mb10{
+   margin-bottom: 10px;
+}
+
+.mt20{
+   margin-top: 20px;
+}
+
+.mb20{
+   margin-bottom: 20px;
 }
 
 .inputBox {
@@ -77,7 +101,7 @@
 }
 
 .appButton {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   width: 150px;
   display: block;
   padding: 10px;
@@ -103,10 +127,11 @@
 }
 
 .invalid-input {
+ font-size: calc(5px + 1vmin);
   display: block;
   color: red;
-  margin-top: -20px;
-  margin-left: 20px;
+  margin-top: -15px;
+  margin-left: 0px;
 }
 .mainDiv {
   height: 450px;
@@ -115,6 +140,8 @@
 .product-list {
   text-align: center;
   margin-top: 50px;
+  height: 550px;
+  overflow-y: scroll;
 }
 
 .product-list ul li {
@@ -140,6 +167,17 @@
   margin-right: 10;
   width: 20px;
   height:15px;
+}
+
+.imgMany { 
+  margin-left: 10px;
+  width: 40px;
+  height:40px;
+}
+
+.flAlCenter { 
+  display: flex;
+  align-items: center;
 }
 
 @keyframes App-logo-spin {
