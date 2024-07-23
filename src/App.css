@@ -59,7 +59,7 @@
 
 .productContainer {
   margin-left: 30%;
-  height: 600px;
+  height: 500px;
   background-color: 'red';
   overflow-y: scroll;
   padding-bottom: 20px;
@@ -140,7 +140,7 @@
 .product-list {
   text-align: center;
   margin-top: 50px;
-  height: 550px;
+  height: 500px;
   overflow-y: scroll;
 }
 
